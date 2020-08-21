@@ -27,6 +27,32 @@ class Usuario{
         ));
     }
 
+    public static function getList(){
+        $sql = new Sql();
+        return $sql->select("SELECT * FROM dbusuario ORDER BY deslogin;");
+    }
+    public static function search($login){
+        $sql = new Sql();
+        return $sql->select("SELECT * FROM dbusuario where deslogin LIKE :SEARCH ORDER BY deslogin;", array(
+            ':SEARCH'=>"%".$login."%"
+        ));
+    }
+    public function login($login, $password){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM dbusuario where deslogin = :LOGIN and dessenha = :PASSWORD", 
+        array(":LOGIN"=>$login, 
+            ":PASSWORD"=>$password)
+        );
+        if(count($results)>0){
+            $row = $results[0];
+            $this->setIdusuario($row['idusuario']);
+            $this->setDeslogin($row['deslogin']);
+            $this->setDessenha($row['dessenha']);
+            $this->setDtcadastro(new Datetime($row['dtcadastro']));
+        }else{
+            throw new Exception("Login e ou senha inválidos");
+        }
+    }
     public function setIdusuario($value){
         $this->idusuario=$value;
     }
