@@ -37,8 +37,16 @@
     $aluno->insert();
     echo $aluno;*/
 
+    //atualizando um aluno
+    /*$aluno = new Usuario();
+    $aluno->loadById(8);
+    $aluno->update("secretaria","987654321");
+    echo $aluno;
+    */
+    
+    //excluindo um aluno
     $aluno = new Usuario();
-    $aluno->loadById(14);
-    $aluno->update("professor","987654321");
+    $aluno->loadById(5);
+    $aluno->delete();
     echo $aluno;
 ?>

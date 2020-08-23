@@ -12,10 +12,10 @@ class Usuario{
     }
     
     public function setData($data){//o data aqui é de dados
-            $this->setIdusuario($data['idusuario']);
-            $this->setDeslogin($data['deslogin']);
-            $this->setDessenha($data['dessenha']);
-            $this->setDtcadastro(new Datetime($data['dtcadastro']));
+        $this->setIdusuario($data['idusuario']);
+        $this->setDeslogin($data['deslogin']);
+        $this->setDessenha($data['dessenha']);
+        $this->setDtcadastro(new Datetime($data['dtcadastro']));
     }
     public function __toString()
     {
@@ -81,6 +81,17 @@ class Usuario{
             ":PASSWORD"=>$this->getDessenha(),
             ":ID"=>$this->getIdusuario()
         ));
+    }
+    public function delete(){
+        $sql = new Sql();
+        $sql->query("DELETE FROM dbusuario WHERE idusuario = :ID",
+        array(":ID"=>$this->getIdusuario())
+        );
+        //depois que excluiu limpa os dados do objeto
+        $this->setIdusuario(0);
+        $this->setDeslogin("");
+        $this->setDessenha("");
+        $this->setDtcadastro(new Datetime());
     }
     public function setIdusuario($value){
         $this->idusuario=$value;
