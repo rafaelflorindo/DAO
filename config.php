@@ -1,14 +1,10 @@
 <?php
 //criação do autoloader
-//capta o new de uma class
-//Sql.php
-spl_autoload_register(function($class_name){
+spl_autoload_register(function($class_name){ //new Usuario
 
-    $filename = "class" . DIRECTORY_SEPARATOR . $class_name.".php";
+    $filename = "class" . DIRECTORY_SEPARATOR . $class_name.".php";//Usuario.php
 
     if (file_exists($filename)){
         require_once($filename);
     }
 });
-
-//$filaname = class/Sql.php

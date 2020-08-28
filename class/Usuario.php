@@ -31,19 +31,25 @@ class Usuario{
         $sql = new Sql();
         return $sql->select("SELECT * FROM dbusuario ORDER BY deslogin;");
     }
+
     public static function search($login){
         $sql = new Sql();
-        return $sql->select("SELECT * FROM dbusuario where deslogin LIKE :SEARCH ORDER BY deslogin;", array(
+        return $sql->select("SELECT * FROM dbusuario where deslogin LIKE :SEARCH ORDER BY deslogin;",
+         array(
             ':SEARCH'=>"%".$login."%"
-        ));
+           ));
     }
+
     public function loadById($id){
         $sql = new Sql();
         $results = $sql->select("SELECT * FROM dbusuario where idusuario = :id", array(":id"=>$id));
-        if(count($results)>0){
+        /*print_r($results);
+        exit;*/
+        if(count($results) > 0){
             $this->setData($results[0]);
         }
     } 
+
     public function login($login, $password){
         $sql = new Sql();
         $results = $sql->select("SELECT * FROM dbusuario where deslogin = :LOGIN and dessenha = :PASSWORD", 
@@ -66,10 +72,12 @@ class Usuario{
                                     ":PASSWORD"=>$this->getDessenha(), 
                                     ":DTCADASTRO"=>$this->getDtcadastro()
                                 ));
+                                
         $results = $sql->select("SELECT * FROM dbusuario WHERE idusuario = LAST_INSERT_ID()");
         if(count($results) > 0)
             $this->setData($results[0]);
     }
+
     public function update($login, $password){
         $this->setDeslogin($login);
         $this->setDessenha($password);
@@ -82,6 +90,7 @@ class Usuario{
             ":ID"=>$this->getIdusuario()
         ));
     }
+
     public function delete(){
         $sql = new Sql();
         $sql->query("DELETE FROM dbusuario WHERE idusuario = :ID",
@@ -93,25 +102,26 @@ class Usuario{
         $this->setDessenha("");
         $this->setDtcadastro(new Datetime());
     }
-    public function setIdusuario($value){
+
+    private function setIdusuario($value){
         $this->idusuario=$value;
     }
     public function getIdusuario(){
         return $this->idusuario;
     }
-    public function setDeslogin($value){
+    private function setDeslogin($value){
         $this->deslogin=$value;
     }
     public function getDeslogin(){
         return $this->deslogin;
     }
-    public function setDessenha($value){
+    private function setDessenha($value){
         $this->dessenha=$value;
     }
     public function getDessenha(){
         return $this->dessenha;
     }
-    public function setDtcadastro($value){
+    private function setDtcadastro($value){
         $this->dtcadastro=$value;
     }
     public function getDtcadastro(){
